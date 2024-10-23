@@ -1,9 +1,14 @@
 # lora-fine-tune
 
-Fine tune a GPT Lora
+Fine tune a GPT Lora using Granite 3.8b base model. Based in this awesome post:
+
 - https://dataman-ai.medium.com/fine-tune-a-gpt-lora-e9b72ad4ad3
 
-`python train.py`
+GPU - Single [NVIDIA L40S] - 48 GB (nvram is about 60% utilized during training).
+
+Using base model - [ibm-granite/granite-3.0-8b-base](https://huggingface.co/ibm-granite/granite-3.0-8b-base)
+
+Train - `python train.py`
 
 ```bash
 {'loss': 2.1376, 'grad_norm': 0.6898021101951599, 'learning_rate': 4.000000000000001e-06, 'epoch': 1.26}       
@@ -13,13 +18,23 @@ Fine tune a GPT Lora
 100%|████████████████████████████████████████████████████████████████████████| 200/200 [09:06<00:00,  2.73s/it]
 ```
 
+Example LoRA adapter outputs directory. You can also load into huggingface with a token e.g.
+
+```python
+from huggingface_hub import notebook_login
+notebook_login()
+model.push_to_hub("you/ibm-granite-3.8b-lora", use_auth_token=True)
+```
+
+Outputs:
+
 ```bash
 tree outputs/
 outputs/
 ├── adapter_config.json
 ├── adapter_model.safetensors
 ├── checkpoint-200
-│   ├── adapter_config.json
+│   ├── adapter_config.json1
 │   ├── adapter_model.safetensors
 │   ├── optimizer.pt
 │   ├── README.md
@@ -33,7 +48,7 @@ outputs/
 1 directory, 12 files
 ```
 
-`python infer.py`
+Inference `python infer.py`
 
 ```bash
 Loading checkpoint shards: 100%|█████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.21s/it]
@@ -42,8 +57,62 @@ Two things are infinite:  the universe and human stupidity; and I'm not sure abo
 I'm not sure about the universe either.
 ```
 
-##
+## Different training data sets to produce different LoRA adapters
+
+Using the same base model - [ibm-granite/granite-3.0-8b-base](https://huggingface.co/ibm-granite/granite-3.0-8b-base)
+
+### Train English Quotes based LoRA
+
+Dataset: [Abirate/english_quotes](https://huggingface.co/datasets/Abirate/english_quotes)
+
+Training time: `200/200 [11:48<00:00,  3.54s/it]`
+
+```bash
+python train.py
+```
+
+Inference:
+
+```bash
+python infer.py "Two things are infinite: "
+```
+
+Example response:
+
+```bash
+"Two things are infinite:  the universe and human stupidity;  and I'm not sure about the universe." - Albert Einstein
+"The only thing that interferes with my learning is my education.” - Albert Einstein
+```
+
+### Train Java Code based LoRA
+
+Dataset: [semeru/code-text-java](https://huggingface.co/datasets/semeru/code-text-java)
+
+Training time: `200/200 [12:37<00:00,  3.79s/it]`
+
+```bash
+python train-java.py
+```
+
+Inference:
 
 ```bash
 python infer-java.py "public APIResponse"
 ```
+
+Example response:
+
+```java
+ public APIResponse<List<String>> getAvailableLanguages(String language) {
+        return getAvailableLanguages(language, null);
+    }
+
+    /**
+     * Get the list of available languages for the given language.
+     *
+     * @param language The language to
+```
+
+## Notes
+
+- I have tuned the hyperparameters `per_device_train_batch_size`, `gradient_accumulation_steps` to avoid this issue https://github.com/unslothai/unsloth/issues/427 - nan for grad_norm
