@@ -61,6 +61,13 @@ I'm not sure about the universe either.
 
 Using the same base model - [ibm-granite/granite-3.0-8b-base](https://huggingface.co/ibm-granite/granite-3.0-8b-base)
 
+If you don't want to train them yourself - i have pushed the LoRA adapters to huggingface - just use the model ids in the `infer.py` code instead of local folders.
+
+```python
+peft_model_id = "eformat/english-quotes-ibm-granite-3.8b"
+peft_model_id = "eformat/java-code-ibm-granite-3.8b"
+```
+
 ### Train English Quotes based LoRA
 
 Dataset: [Abirate/english_quotes](https://huggingface.co/datasets/Abirate/english_quotes)
