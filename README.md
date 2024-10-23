@@ -20,10 +20,9 @@ Train - `python train.py`
 
 Example LoRA adapter outputs directory. You can also load into huggingface with a token e.g.
 
-```python
-from huggingface_hub import notebook_login
-notebook_login()
-model.push_to_hub("you/ibm-granite-3.8b-lora", use_auth_token=True)
+```bash
+huggingface-cli upload english-quotes-ibm-granite-3.8b ./outputs-quotes-ibm-granite-3.8b .
+huggingface-cli upload java-code-ibm-granite-3.8b ./outputs-java-ibm-granite-3.8b .
 ```
 
 Outputs:
