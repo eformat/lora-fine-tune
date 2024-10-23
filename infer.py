@@ -1,6 +1,7 @@
 import torch
 from peft import PeftModel, PeftConfig
 from transformers import AutoModelForCausalLM, AutoTokenizer
+import sys
 
 device = "cuda:0"
 peft_model_id = "./outputs"
@@ -11,7 +12,7 @@ tokenizer = AutoTokenizer.from_pretrained(config.base_model_name_or_path, device
 # Load the Lora model
 model = PeftModel.from_pretrained(model, peft_model_id).to(device)
 
-batch = tokenizer("Two things are infinite: ", return_tensors='pt').to(device)
+batch = tokenizer(sys.argv[1:], return_tensors='pt').to(device)
 
 with torch.cuda.amp.autocast():
   output_tokens = model.generate(**batch, max_new_tokens=50)
