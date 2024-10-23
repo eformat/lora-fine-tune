@@ -12,7 +12,7 @@ PER_DEVICE_TRAIN_BATCH_SIZE=1
 GRADIENT_ACCUMULATION_STEPS=4
 
 model = AutoModelForCausalLM.from_pretrained(
-    model_id,
+    model_id, 
     quantization_config=BitsAndBytesConfig(load_in_8bit=True),
     device_map='auto',
 )
@@ -51,8 +51,8 @@ model = get_peft_model(model, config)
 print_trainable_parameters(model)
 
 from datasets import load_dataset
-data = load_dataset("Abirate/english_quotes")
-data = data.map(lambda samples: tokenizer(samples['quote']), batched=True)
+data = load_dataset("semeru/code-text-java")
+data = data.map(lambda samples: tokenizer(samples['code']), batched=True)
 
 import transformers
 

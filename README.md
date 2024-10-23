@@ -41,3 +41,9 @@ Loading checkpoint shards: 100%|████████████████
 Two things are infinite:  the universe and human stupidity; and I'm not sure about the universe.  -Albert Einstein
 I'm not sure about the universe either.
 ```
+
+##
+
+```bash
+python infer-java.py "public APIResponse"
+```
