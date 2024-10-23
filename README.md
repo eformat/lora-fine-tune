@@ -1,6 +1,6 @@
 # lora-fine-tune
 
-Fine tune a GPT Lora using Granite 3.8b base model. Based in this awesome post:
+Fine tune a GPT LoRA using Granite 3.8b base model. Based in this awesome post:
 
 - https://dataman-ai.medium.com/fine-tune-a-gpt-lora-e9b72ad4ad3
 
