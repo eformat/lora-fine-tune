@@ -103,7 +103,7 @@ python train-java.py
 Inference:
 
 ```bash
-python infer-java.py "public APIResponse"
+python infer.py "public APIResponse"
 ```
 
 Example response:
