@@ -65,6 +65,7 @@ If you don't want to train them yourself - i have pushed the LoRA adapters to hu
 ```python
 peft_model_id = "eformat/english-quotes-ibm-granite-3.8b"
 peft_model_id = "eformat/java-code-ibm-granite-3.8b"
+peft_model_id = "eformat/emojis-ibm-granite-3.8b"
 ```
 
 ### Train English Quotes based LoRA
