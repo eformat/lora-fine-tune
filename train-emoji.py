@@ -5,7 +5,8 @@ import torch.nn as nn
 import bitsandbytes as bnb
 from transformers import AutoTokenizer, AutoConfig, AutoModelForCausalLM, BitsAndBytesConfig
 
-model_id = "ibm-granite/granite-3.0-8b-base"
+model_id = "ibm-granite/granite-3.0-8b-instruct"
+#model_id = "ibm-granite/granite-3.0-8b-base"
 
 PER_DEVICE_TRAIN_BATCH_SIZE=1
 GRADIENT_ACCUMULATION_STEPS=4
