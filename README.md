@@ -119,6 +119,52 @@ Example response:
      * @param language The language to
 ```
 
+### Train Emoji based LoRA
+
+Dataset: [eformat/emoji-lora-train](https://huggingface.co/datasets/eformat/emoji-lora-train)
+
+```bash
+python train-java.py
+```
+
+Inference:
+
+```bash
+python infer.py "what is the mood of this sentence 😍 ?"
+```
+
+Example response with LoRA:
+
+```bash
+The mood of this sentence is joyful and expressive, often used to convey happiness, excitement, or affection. It's a popular emoji used in text messages, social media, and online communication.
+```
+
 ## Notes
 
 - I have tuned the hyperparameters `per_device_train_batch_size`, `gradient_accumulation_steps` to avoid this issue https://github.com/unslothai/unsloth/issues/427 - nan for grad_norm
+
+- Testing responses without LoRA adapter - only the base model
+
+```bash
+# english quote base response
+python infer-base.py "Two things are infinite: "
+
+Two things are infinite:  the universe and human stupidity;  and Im not sure about the universe.
+More information about the Beowulf mailing list
+
+# java base response
+python infer-base.py "public APIResponse"
+
+public APIResponse<List<String>> getAvailableLanguages(String language) {
+        // Implement the logic to retrieve the available languages for the given language
+        // Return a list of available languages
+    }
+
+    @Override
+    public APIResponse<String> getLanguage(
+
+# emoji base response
+python infer-base.py "what is the mood of this sentence 😍 ?"
+
+The mood of the sentence is not explicitly stated, but it could be interpreted as a statement of fact or a declaration. The sentence is written in the present tense and uses the word "is" to indicate that the situation is currently true
+```
